@@ -126,7 +126,7 @@ if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 
 if(is_admin()){
 
-	require_once(WP_PLUGIN_DIR . '/lar/admin/admin-interface.php');
+	require_once( plugin_dir_path( __FILE__ ).'/admin/admin-interface.php');
 
 
 
