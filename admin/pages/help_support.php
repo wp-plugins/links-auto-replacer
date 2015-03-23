@@ -1,9 +1,9 @@
-
+<?php include 'lar_menu.php'; ?>
 <div id='lar_main_wrap'>
 
- <h1>Help and Support</h1>
+ <h1><?php echo __('Help and Support','lar-links-auto-replacer'); ?></h1>
 
-<h2 class="lar_subheading">Support</h2>
+<h2 class="lar_subheading"><?php echo __('Support','lar-links-auto-replacer'); ?></h2>
 
 <p>
 	Links Auto Replacer is a Wordpress plugin that helps you to replace a specific keywords to links automatically.<br/>
@@ -11,7 +11,7 @@
 
 </p>
 
-<h2 class="lar_subheading">Donation</h2>
+<h2 class="lar_subheading"><?php echo __('Donation','lar-links-auto-replacer'); ?></h2>
 Waseem is running on coffee, so if he is out of coffee, he will stop producing free plugins to the world, so if you think that his work is good please buy him a cup of coffee to let his brain awake :)
 <br/>
 <br/>

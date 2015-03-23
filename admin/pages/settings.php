@@ -1,3 +1,4 @@
+<?php include 'lar_menu.php'; ?>
 <div id='lar_main_wrap'>
 
 	 <h1><?php echo __('Links Auto Replacer Options','lar-links-auto-replacer'); ?></h1>
@@ -20,7 +21,7 @@
 	jQuery(document).ready(function(){
 		 <?php if ( isset($_REQUEST['edited']) && $_REQUEST['edited'] == 'true' ) { ?>
 
- 			jQuery.notify("Settings have been successfully updated!!",{ globalPosition:"top center",className:'success'});
+ 			jQuery.notify("<?php echo __('Settings have been successfully updated!!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'success'});
       	
       	<?php } ?>
 	});	

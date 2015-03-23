@@ -2,85 +2,10 @@
 
 global $wpdb;
  $lar_links = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'lar_links',ARRAY_A); ?>
-
+<?php include_once 'lar_menu.php'; ?>
 <div id='lar_main_wrap'>
 
  <h1><?php echo __('Manage Your Links','lar-links-auto-replacer'); ?></h1>
-
-<h2 class="lar_subheading">New Link</h2>
-<div id="lar_add_links_form">
-    <form action="<?php echo admin_url('admin.php?page=lar_links_manager&noheader=true'); ?>" method='post'>
-    <table cellspacing="5" cellpadding="3" class="widefat fixed">
-       <thead>
-          <tr>
-            <th><?php echo __('Keyword','lar-links-auto-replacer'); ?></th>
-            <th style="width:280px"> <?php echo __('URL (Link)','lar-links-auto-replacer'); ?></th>
-            <th style="width: 66px;"><?php echo __('Dofollow?','lar-links-auto-replacer'); ?></th>
-            <th><?php echo __('Open in','lar-links-auto-replacer'); ?></th>
-            <th style="width: 45px;"><?php echo __('Cloack','lar-links-auto-replacer'); ?></th>
-            <th ><?php echo __('Slug','lar-links-auto-replacer'); ?></th>
-            <th style="width: 75px;"></th>
-            
-          </tr>
-          
-        </thead>
-      <tr>
- 
-        <td>
-          
-          
-         <input type="text" id="keyword" class="widefat" name="keyword" value="" />
-         
-        </td>
-
-        <td>
-          
-         <input type="url" id="keyword_url" class="widefat"  name="keyword_url" value="" placeholder="http://" />
-         
-
-        </td>
-
-        <td>
-          
-           
-         <input type="checkbox" name="dofollow" value="1" />
-
-        </td>
-        <td>
-         
-         <select name="target" class="widefat">
-         <option selected value="_self">Same Window</option>
-            <option value="_blank">New Window</option>
-            
-
-         </select>
-        </td>
-        <td>
-          
-         
-         <input id="cloack" name="cloack" type="checkbox" value="1" />
-
-        </td>
-
-        <td >
-             
-         <input type="text" class="widefat" value="" id="lar_slug" name="slug" disabled="" placeholder='slug' />
-
-        </td>
-
-        <td>
-          
-
-         <input type="submit" name="submit" id="submit" class="button button-primary" value="Add Link">
-    
-        </td>
-      </tr>
-    </table>
-   
-    
-     
-      
-    </form>
 
 
 
@@ -92,7 +17,7 @@ global $wpdb;
     
     <tr>
             <th style="width:20px;">#</th>
-            <th><?php echo __('Keyword','lar-links-auto-replacer'); ?></th>
+            <th><?php echo __('Keyword/s','lar-links-auto-replacer'); ?></th>
             <th style="width:310px"> <?php echo __('URL (Link)','lar-links-auto-replacer'); ?></th>
             <th style="width: 65px;"><?php echo __('Dofollow?','lar-links-auto-replacer'); ?></th>
             <th><?php echo __('Open in','lar-links-auto-replacer'); ?></th>
@@ -111,10 +36,99 @@ global $wpdb;
                 <td><?php echo ($link['open_in'] == '_blank')?'New Window':'Same Window'; ?></td>
                 <td><?php echo ($link['cloack']==1)?'Yes':'No'; ?></td>
                 <td><?php echo $link['slug']; ?></td>
-                <td><a href="<?php echo admin_url('admin.php?page=lar_links_manager&link_id='.$link['id']); ?>" class="lar_green">Edit</a> | <a href="javascript:void(0)" onclick="delete_link('<?php echo $link['id']; ?>')" class="lar_red">Delete</a></td>
+                <td><a href="<?php echo admin_url('admin.php?page=lar_links_manager&link_id='.$link['id']); ?>" class="lar_green"><?php echo __('Edit','lar-links-auto-replacer'); ?></a> | <a href="javascript:void(0)" onclick="delete_link('<?php echo $link['id']; ?>')" class="lar_red"><?php echo __('Delete','lar-links-auto-replacer'); ?></a></td>
             </tr>
   <?php endforeach; ?>
 </table>
+
+
+
+<h2 class="lar_subheading"><?php echo __('New Link','lar-links-auto-replacer'); ?></h2>
+<div id="lar_add_links_form">
+    <form action="<?php echo admin_url('admin.php?page=lar_links_manager&noheader=true'); ?>" method='post'>
+
+   
+
+     <table id="lar_add_link_table" cellspacing="5" cellpadding="3" class="widefat fixed">
+       
+      <tr>
+        <td style="width:100px;"><?php echo __('Keyword/s','lar-links-auto-replacer'); ?></td>
+        <td>
+        
+        <select  class="keyword widefat" name="keyword" multiple="multiple">
+            
+        </select>
+        <input type="hidden" value="" id="keywords" name="keywords" />
+          <p>You can use one keyword or multiple keywords separated by comma (,) </p>
+          
+        </td>
+      </tr>
+
+      <tr>
+          <td><?php echo __('URL (Link)','lar-links-auto-replacer'); ?></td>
+        <td><input type="url" id="keyword_url"   name="keyword_url" value="" placeholder="http://" /></td>
+      </tr>
+
+
+      <tr>
+        <td><?php echo __('Dofollow?','lar-links-auto-replacer'); ?>
+        <!-- <img id="dofollow-info" src="<?php echo  plugins_url( '../images/info.png' , __FILE__ ); ?>"/> -->
+          
+        </td>
+        <td><input type="checkbox" name="dofollow" value="1" />
+        <p><?php echo __('if you checked this option, you will allow search engines to follow this link and use it in ranking.','lar-links-auto-replacer'); ?></p>
+        </td>
+      </tr>
+
+      <tr>
+
+          <td><?php echo __('Open in','lar-links-auto-replacer'); ?></td>
+          <td>
+             <select name="target" >
+                <option selected value="_self"><?php echo __('Same Window','lar-links-auto-replacer'); ?></option>
+                <option value="_blank"><?php echo __('New Window','lar-links-auto-replacer'); ?></option>
+              </select>
+          </td>
+
+      </tr>
+
+
+
+
+        <tr>
+            <td><?php echo __('Shrink','lar-links-auto-replacer'); ?>?
+            <!-- <img id="cloak-info" src="<?php echo  plugins_url( '../images/info.png' , __FILE__ ); ?>"/> -->
+            </td>
+            <td><input id="cloack" name="cloack" type="checkbox" value="1" />
+              <p><?php echo __('The link will be shortened (e.g example.com/go/amazon)','lar-links-auto-replacer'); ?></p>
+            </td>
+        </tr>
+
+      <tr>  
+          <td><?php echo __('Slug','lar-links-auto-replacer'); ?> 
+              <!-- <img id="slug-info" src="<?php echo  plugins_url( '../images/info.png' , __FILE__ ); ?>"/> -->
+
+          </td>
+
+          <td ><input type="text"  value="" id="lar_slug" name="slug" disabled="" placeholder='slug' />
+                  <p><?php echo __('The slug for the shortened link','lar-links-auto-replacer'); ?> <span id="lar_slug_example"></span></p>
+          </td>
+      </tr>
+
+
+
+      <tr>
+            <td><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo __('Add Link','lar-links-auto-replacer'); ?>"></td>
+            <td></td>
+        </tr>
+      
+    </table>
+      
+    </form>
+
+
+
+
 
 </div>
 
@@ -123,6 +137,52 @@ global $wpdb;
 
 <script>
   jQuery(document).ready(function(){
+    jQuery('.keyword').select2({
+       tags: true,
+       tokenSeparators: [',']
+       
+    });
+
+
+    jQuery('.keyword').on("change", function(e){
+        
+            jQuery('#keywords').val(jQuery(".keyword").select2("val"));
+          
+
+    });
+
+    jQuery("#slug-info").hover(function(){
+                
+                jQuery(this).notify(
+                  
+                  "<?php echo __('The slug for the shortened link','lar-links-auto-replacer'); ?>", 
+                     
+                  { position:"top center", className: "info"}
+                );
+
+    }).mouseleave(function(){
+        jQuery('.notifyjs-wrapper').trigger('notify-hide');
+    });
+
+
+    jQuery("#cloak-info").hover(function(){
+                jQuery(this).notify(
+                    "<?php echo __('The link will be shortened (e.g example.com/go/amazon)','lar-links-auto-replacer'); ?>",
+                  { position:"top center", className: "info"}
+                );
+    }).mouseleave(function(){
+        jQuery('.notifyjs-wrapper').trigger('notify-hide');
+    });
+
+
+    jQuery("#dofollow-info").hover(function(){
+                jQuery(this).notify(
+                    "<?php echo __('if you checked this, you will allow search engines to follow this link and use it in ranking.','lar-links-auto-replacer'); ?>", 
+                  { position:"top center", className: "info"}
+                );
+    }).mouseleave(function(){
+        jQuery('.notifyjs-wrapper').trigger('notify-hide');
+    });
 
     var slugs = [];
     var keywords = [];
@@ -137,36 +197,36 @@ global $wpdb;
     jQuery("#submit").click(function(){
 
       if(jQuery('#keyword').val() == ''){
-        jQuery.notify("You must provide a keyword!",{ globalPosition:"top center",className:'error'});
+        jQuery.notify("<?php echo __('You must provide a keyword!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'error'});
         return false;
       }
       if(!is_valid_url(jQuery('#keyword_url').val())){
-         jQuery.notify("You must provide a valid URL!",{ globalPosition:"top center",className:'error'});
+         jQuery.notify("<?php echo __('You must provide a valid URL!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'error'});
         return false;
       }
       if(jQuery('#cloack').is(':checked') && jQuery('#lar_slug').val()==''){
-        jQuery.notify("You must provide a slug in order to cloack the URL!",{ globalPosition:"top center",className:'error'});
+        jQuery.notify("<?php echo __('You must provide a slug in order to shrink the URL!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'error'});
         return false;
 
       }
 
       if(jQuery("#lar_slug").val()!='' && jQuery('#cloack').is(':checked')){
         if(slugs.indexOf(jQuery("#lar_slug").val()) != -1){
-            jQuery.notify(jQuery("#lar_slug").val()+" is exist as a slug, the slug must be unique!",{ globalPosition:"top center",className:'error'});
+            jQuery.notify(jQuery("#lar_slug").val()+" <?php echo __('is exist as a slug, the slug must be unique!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'error'});
             return false;
         }
       }
 
       if(jQuery('#keyword').val()!=''){
         if(keywords.indexOf(jQuery("#keyword").val()) != -1){
-            jQuery.notify(jQuery("#keyword").val()+" is exist as a keyword, the keyword must be unique!",{ globalPosition:"top center",className:'error'});
+            jQuery.notify(jQuery("#keyword").val()+" <?php echo __('is exist as a keyword, the keyword must be unique!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'error'});
             return false;
         }
       }
 
       if(jQuery('#keyword_url').val()!=''){
         if(links.indexOf(jQuery("#keyword_url").val()) != -1){
-            jQuery.notify("The URL is exist, it must be unique!",{ globalPosition:"top center",className:'error'});
+            jQuery.notify("<?php echo __('The URL is exist, it must be unique!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'error'});
             return false;
         }
       }
@@ -180,6 +240,9 @@ global $wpdb;
         var attr = jQuery('#lar_slug').attr('disabled');
         if (typeof attr !== typeof undefined && attr !== false) {
               jQuery('#lar_slug').removeAttr('disabled');
+              jQuery('#lar_slug').val('<?php echo $last_link_id; ?>'); 
+              jQuery("#lar_slug").trigger('change');
+              
         }else{
               
               jQuery('#lar_slug').attr('disabled','disabled');
@@ -188,15 +251,23 @@ global $wpdb;
         
     });
 
+    jQuery("#lar_slug").bind('change paste keyup', function(){
+          if(jQuery(this).val()!=''){
+            jQuery("#lar_slug_example").html('<?php echo home_url(); ?>/go/' + jQuery(this).val());
+          }else{
+            jQuery("#lar_slug_example").html('');
+          }
+    });
+
     <?php if ( isset($_REQUEST['success']) && $_REQUEST['success'] == 'true' ) { ?>
 
- jQuery.notify("Your link has been added successfully!!",{ globalPosition:"top center",className:'success'});
+ jQuery.notify("<?php echo __('Your link has been added successfully!!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'success'});
       <?php } ?>
 
 
  <?php if ( isset($_REQUEST['edited']) && $_REQUEST['edited'] == 'true' ) { ?>
 
- jQuery.notify("Your link has been edited successfully!!",{ globalPosition:"top center",className:'success'});
+ jQuery.notify("<?php echo __('Your link has been edited successfully!!','lar-links-auto-replacer'); ?>",{ globalPosition:"top center",className:'success'});
       <?php } ?>
       
 

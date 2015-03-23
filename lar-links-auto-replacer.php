@@ -15,7 +15,7 @@
  * Plugin Name:       Links Auto Replacer
  * Plugin URI:        http://waseem-senjer.com/lar/
  * Description:       Auto replace your affiliate links and track them.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Waseem Senjer
  * Author URI:        http://waseem-senjer.com
  * Text Domain:       lar-links-auto-replacer
@@ -43,7 +43,7 @@ function lar_action_init(){
 
 
 
-
+register_activation_hook( __FILE__, 'lar_activate' );
 function lar_activate() {
 			global $wpdb;
 			    $sql = '
@@ -59,7 +59,7 @@ function lar_activate() {
 						  `created` int(11) NOT NULL,
 						  `updated` int(11) NOT NULL,
 						  PRIMARY KEY (`id`)
-						) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+						) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 			';
 
 			$wpdb->query($sql);
@@ -68,25 +68,35 @@ function lar_activate() {
 			add_option('lar_enable' , 1);
 
 
+			do_action('lar_plugin_activation');
+
 			// rewrite rules
 			//keywords_create_rewrite_rules();
 			 global $wp_rewrite;
     		 $wp_rewrite->flush_rules();
 
 }
-register_activation_hook( __FILE__, 'lar_activate' );
 
 
 /// Replace The links
 if( get_option('lar_enable') == 1 ){
 	add_filter('the_content','lar_auto_replace_links');
+	add_filter('the_excerpt','lar_auto_replace_links');
+
+
 }
 
 function lar_auto_replace_links($content){
 	global $wpdb; 
+	global $post;
+
+	$is_disabled =  get_post_meta( $post->ID, 'lar_disabled'  , true );
+	
+	if($is_disabled == 'on') return $content;
+
 
 	$links = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'lar_links');
-
+	
 	foreach ($links as $link) {
 		$dofollow = '';
 		if($link->dofollow != 1){
@@ -102,12 +112,21 @@ function lar_auto_replace_links($content){
 		}
 
 		
-		$final_url = '<a href="'.$url.'" '.$dofollow.' target="'.$link->open_in.'">'.$link->keyword.'</a>';
-		$content = preg_replace('/\b'.$link->keyword.'\b/u', $final_url, $content);
-
+		
+		$keywords = explode(',', $link->keyword);
+		foreach($keywords as $keyword){
+			$final_url = ' <a href="'.$url.'" '.$dofollow.' target="'.$link->open_in.'">'.$keyword.'</a> ';
+			$post_content = $content;
+			$content =  preg_replace('/\s'.$keyword.'\s/iu', $final_url, $post_content);
+			
+		}
+		
 		
 	}
 
+	// Replace Content Filter
+	$content = apply_filters('lar_replace_content', $content);
+	
 	return $content;
 }
 
@@ -116,33 +135,9 @@ function lar_auto_replace_links($content){
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
 
-
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-
-	//require_once( plugin_dir_path( __FILE__ ) . 'admin/class-plugin-name-admin.php' );
-	//add_action( 'plugins_loaded', array( 'Plugin_Name_Admin', 'get_instance' ) );
-
-}
-
 if(is_admin()){
 
 	require_once( plugin_dir_path( __FILE__ ).'/admin/admin-interface.php');
-
-
-
-	add_action( 'wp_ajax_delete_link', 'lar_delete_link_callback' );
-
-	function lar_delete_link_callback() {
-		global $wpdb; // this is how you get access to the database
-
-		$link_id = intval( $_POST['link_id'] );
-
-		$wpdb->delete($wpdb->prefix.'lar_links',array('id'=>$link_id));
-
-	        
-
-		die(); // this is required to terminate immediately and return a proper response
-	}
 }
 
 
@@ -190,4 +185,8 @@ function lar_redirect(){
 		
 	}
 	
+}
+// Links Auto Replacer Pro Features
+if ( file_exists( plugin_dir_path( __FILE__ ).'/pro/lar_pro.php' ) ){
+	require_once( plugin_dir_path( __FILE__ ).'/pro/lar_pro.php');
 }

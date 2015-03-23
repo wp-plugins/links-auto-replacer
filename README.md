@@ -9,7 +9,7 @@ Requires at least: 3.5.1
 
 Tested up to: 4.0
 
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 
 License: GPLv2 or later
 
@@ -66,6 +66,15 @@ Yes, it is. You can mark the link to be cloaked and provide a readable slug to u
 3. The auto replacement of the keywords in the post.
 
 ## Changelog
+
+### 1.1
+* Fix the UTF-8 encoding for keywords.
+* Fix the sensitivity of the keywords letters.
+* Add auto generated slugs when the user choose to shrink the link.
+* Changing the UI for better user experience.
+* Now you can add multiple keywords for one URL.
+* Meta Box is added to disable the auto replacement for individual posts.
+
 
 ### 1.0
 * Initial release.
