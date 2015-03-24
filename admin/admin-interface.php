@@ -8,6 +8,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 require 'meta-box.php';
+require 'classes/class.base62.php';
 
 add_action('admin_menu', 'propanel_siteoptions_add_admin');
 
@@ -189,23 +190,28 @@ function get_links_last_id(){
                 ORDER BY ID DESC limit 0,1
             "
          );
+	if(function_exists('gmp_strval')){
 
-	return ($id == null)?base62encode(100):base62encode($id+100);
-}
-
-
-function base62encode($data) {
-	$outstring = '';
-	$l = strlen($data);
-	for ($i = 0; $i < $l; $i += 8) {
-		$chunk = substr($data, $i, 8);
-		$outlen = ceil((strlen($chunk) * 8)/6); //8bit/char in, 6bits/char out, round up
-		$x = bin2hex($chunk);  //gmp won't convert from binary, so go via hex
-		$w = gmp_strval(gmp_init(ltrim($x, '0'), 16), 62); //gmp doesn't like leading 0s
-		$pad = str_pad($w, $outlen, '0', STR_PAD_LEFT);
-		$outstring .= $pad;
+		return ($id == null)?base62encode(100):base62encode($id+100);
+	}else{
+		return ($id == null)?base62::encode(100):base62::encode($id+100);
 	}
-	return $outstring;
+	
 }
 
+if(function_exists('gmp_strval')){
+	function base62encode($data) {
+		$outstring = '';
+		$l = strlen($data);
+		for ($i = 0; $i < $l; $i += 8) {
+			$chunk = substr($data, $i, 8);
+			$outlen = ceil((strlen($chunk) * 8)/6); //8bit/char in, 6bits/char out, round up
+			$x = bin2hex($chunk);  //gmp won't convert from binary, so go via hex
+			$w = gmp_strval(gmp_init(ltrim($x, '0'), 16), 62); //gmp doesn't like leading 0s
+			$pad = str_pad($w, $outlen, '0', STR_PAD_LEFT);
+			$outstring .= $pad;
+		}
+		return $outstring;
+	}
+}
 
