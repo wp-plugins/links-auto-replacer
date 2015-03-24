@@ -4,7 +4,7 @@ Donate link: http://www.waseem-senjer.com
 Tags: affiliate, links, automation,keywords,cloak,cloaking,marketing
 Requires at least: 3.5.1
 Tested up to: 4.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,9 @@ Yes, it is. You can mark the link to be cloaked and provide a readable slug to u
 3. The auto replacement of the keywords in the post.
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixing the GMP problem when the GMP module is not loaded.
 
 = 1.1 =
 * Fix the UTF-8 encoding for keywords.
