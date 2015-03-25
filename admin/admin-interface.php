@@ -90,7 +90,15 @@ function lar_links_manager(){
 	}elseif($_REQUEST['link_id']!='' and $_POST){ // edit link
 
 		global $wpdb; 
-		$last_link_id = base62encode($_REQUEST['link_id'] + 100); 
+		if(function_exists('gmp_strval')){
+			$last_link_id = base62encode($_REQUEST['link_id'] + 100); 
+		
+		}else{
+		
+			$last_link_id = base62::encode($_REQUEST['link_id'] + 100); 
+
+		}
+		
 
 		$link['keyword'] = $_POST['keywords'];
 		$link['keyword_url'] = $_POST['keyword_url'];

@@ -60,6 +60,9 @@ Yes, it is. You can mark the link to be cloaked and provide a readable slug to u
 
 == Changelog ==
 
+= 1.1.2 =
+* Fixing a critical bug.
+
 = 1.1.1 =
 * Fixing the GMP problem when the GMP module is not loaded.
 
