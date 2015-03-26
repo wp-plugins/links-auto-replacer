@@ -19,7 +19,7 @@ class base62
     static $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     static $base = 62;
 
-    public function encode($var) 
+    public static function encode($var) 
     {
         $stack = array();
         while (bccomp($var, 0) != 0)
@@ -33,7 +33,7 @@ class base62
         return implode('', array_reverse($stack));
     }
 
-    public function decode($var) 
+    public static function decode($var) 
     {
         $length = strlen($var);
         $result = 0;

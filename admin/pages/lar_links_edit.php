@@ -14,7 +14,7 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
     <form action="<?php echo admin_url('admin.php?page=lar_links_manager&link_id='.$_REQUEST['link_id'].'&noheader=true'); ?>" method='post'>
    
    
-    
+   
      
       <table id="lar_add_link_table" cellspacing="5" cellpadding="3" class="widefat fixed">
        
@@ -41,8 +41,7 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
 
       <tr>
         <td><?php echo __('Dofollow?','lar-links-auto-replacer'); ?>
-        <!-- <img id="dofollow-info" src="<?php echo  plugins_url( '../images/info.png' , __FILE__ ); ?>"/> -->
-          
+       
         </td>
         <td><input type="checkbox" name="dofollow"  <?php if($link['dofollow']==1){ echo 'checked'; } ?> />
         <p><?php echo __('if you checked this option, you will allow search engines to follow this link and use it in ranking.','lar-links-auto-replacer'); ?></p>
@@ -66,8 +65,7 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
 
         <tr>
             <td><?php echo __('Shrink','lar-links-auto-replacer'); ?>?
-            <!-- <img id="cloak-info" src="<?php echo  plugins_url( '../images/info.png' , __FILE__ ); ?>"/> -->
-            </td>
+           </td>
             <td><input id="cloack" name="cloack" type="checkbox" <?php if($link['cloack']==1){ echo 'checked'; } ?> />
               <p><?php echo __('The link will be shortened (e.g example.com/go/amazon)','lar-links-auto-replacer'); ?></p>
             </td>
@@ -75,11 +73,10 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
 
       <tr>  
           <td><?php echo __('Slug','lar-links-auto-replacer'); ?> 
-              <!-- <img id="slug-info" src="<?php echo  plugins_url( '../images/info.png' , __FILE__ ); ?>"/> -->
-
+            
           </td>
 
-          <td ><input type="text" <?php if($link['cloack']!=1){ echo 'disabled'; } ?> value="<?php echo $link['slug'] ?>" id="lar_slug" name="slug" disabled="" placeholder='slug' />
+          <td ><input type="text" <?php if($link['cloack']!=1){ echo 'disabled'; } ?> value="<?php echo $link['slug'] ?>" id="lar_slug" name="slug" placeholder='slug' />
                   <p><?php echo __('The slug for the shortened link','lar-links-auto-replacer'); ?> <span id="lar_slug_example"><?php if($link['slug']!=''){ echo home_url().'/go/'.$link['slug'];  }?></span></p>
           </td>
       </tr>
@@ -123,6 +120,7 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
     var slugs = [];
     var keywords = [];
     var links = [];
+    var slugs = [];
      <?php foreach ($lar_links as $link):
         if($link['id'] == $_GET['link_id']) continue;
       ?>
