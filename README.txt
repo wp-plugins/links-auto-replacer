@@ -60,6 +60,9 @@ Yes, it is. You can mark the link to be cloaked and provide a readable slug to u
 
 == Changelog ==
 
+= 1.1.3 =
+* Fixing the comma replacing problem
+
 = 1.1.2 =
 * Fixing a critical bug.
 
