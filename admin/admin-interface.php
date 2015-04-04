@@ -68,6 +68,7 @@ function lar_links_manager(){
 		$link['dofollow'] = ($_POST['dofollow']  == 1)?1:0;
 		$link['open_in'] = $_POST['target'];
 		$link['cloack'] = ($_POST['cloack'] == 1 )?1:0;
+		$link['is_sensitive'] = ($_POST['is_sensitive'] == 1 )?1:0;
 		$link['slug'] = $_POST['slug'];
 		$link['created'] = time();
 		$link['updated'] = time();
@@ -106,6 +107,7 @@ function lar_links_manager(){
 		$link['open_in'] = $_POST['target'];
 		$link['cloack'] = ($_POST['cloack'] == 'on' )?1:0;
 		$link['slug'] = $_POST['slug'];
+		$link['is_sensitive'] = ($_POST['is_sensitive'] == 1 )?1:0;
 		$link['updated'] = time();
 
 		// Update Link Filter

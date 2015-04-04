@@ -81,6 +81,17 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
           </td>
       </tr>
 
+      
+       <tr>
+            <td><?php echo __('Case Sensitive?','lar-links-auto-replacer'); ?></td>
+            <td><input id="is_sensitive" name="is_sensitive" type="checkbox" value="1" <?php if($link['is_sensitive']==1){ echo 'checked'; } ?> />
+              <p><?php echo __('If you checked this option, the plugin will replace the keywords exactly according to the letters case.','lar-links-auto-replacer'); ?></p>
+            </td>
+        </tr>
+
+
+
+
 
 
       <tr>
@@ -120,7 +131,7 @@ $link = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'lar_links WHERE id='.$_RE
     var slugs = [];
     var keywords = [];
     var links = [];
-    var slugs = [];
+   
      <?php foreach ($lar_links as $link):
         if($link['id'] == $_GET['link_id']) continue;
       ?>

@@ -15,7 +15,7 @@
  * Plugin Name:       Links Auto Replacer
  * Plugin URI:        http://waseem-senjer.com/lar/
  * Description:       Auto replace your affiliate links and track them.
- * Version:           1.1.2
+ * Version:           1.2.0
  * Author:            Waseem Senjer
  * Author URI:        http://waseem-senjer.com
  * Text Domain:       lar-links-auto-replacer
@@ -63,6 +63,21 @@ function lar_activate() {
 			';
 
 			$wpdb->query($sql);
+
+
+			/**
+			*  add case sensitivity
+			*  since 1.1.2
+			* 	
+			**/
+			$case_sensitive_sql = 'ALTER TABLE `'.$wpdb->prefix.'lar_links` ADD `is_sensitive` INT NOT NULL DEFAULT \'0\' AFTER `slug`;'; 
+
+			try{
+				$wpdb->query($case_sensitive_sql);
+			}catch(Exception $e){}
+
+
+
 
 			// Add the default options
 			add_option('lar_enable' , 1);
@@ -115,9 +130,13 @@ function lar_auto_replace_links($content){
 		
 		$keywords = explode(',', $link->keyword);
 		foreach($keywords as $keyword){
-			$final_url = ' <a href="'.$url.'" '.$dofollow.' target="'.$link->open_in.'">'.$keyword.'</a> ';
-			$post_content = $content;
-			$content =  preg_replace('/\s'.$keyword.'\s/iu', $final_url, $post_content);
+			$keyword = html_entity_decode(stripslashes(wptexturize($keyword)));
+			
+			$final_url = ' <a href="'.$url.'" '.$dofollow.' target="'.$link->open_in.'">'.$keyword.'</a>';
+			$post_content = html_entity_decode(($content));
+			// sensitivity modifier
+			$i = ($link->is_sensitive != 1)?'i':'';
+			$content =  preg_replace('/\s'.($keyword).'/'.$i.'u', $final_url, $post_content);
 			
 		}
 		
