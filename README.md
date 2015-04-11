@@ -9,7 +9,7 @@ Requires at least: 3.5.1
 
 Tested up to: 4.1
 
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 
 License: GPLv2 or later
 
@@ -67,6 +67,8 @@ Yes, it is. You can mark the link to be cloaked and provide a readable slug to u
 
 ## Changelog
 
+### 1.2.1
+* Add "Disable Auto Links" meta box to the pages.
 
 ### 1.2.0
 * User Interface fixes.
