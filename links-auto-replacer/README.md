@@ -9,7 +9,7 @@ Requires at least: 3.5.1
 
 Tested up to: 4.1
 
-Stable tag: 1.3
+Stable tag: 1.2.1
 
 License: GPLv2 or later
 
@@ -67,8 +67,7 @@ Yes, it is. You can mark the link to be cloaked and provide a readable slug to u
 
 ## Changelog
 
-### 1.3 
-* Major enhancement on the replacing methodology.
+### 1.2.2
 * Stopping the replacement inside html tags.
 
 ### 1.2.1
