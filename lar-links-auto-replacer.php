@@ -141,8 +141,6 @@ function lar_auto_replace_links($content){
 			$post_content = html_entity_decode(($content));
 			// sensitivity modifier
 			$i = ($link->is_sensitive != 1)?'i':'';
-			//$content =  preg_replace('/\s'.($keyword).'/'.$i.'u', $final_url, $post_content);
-			//$content =  preg_replace("/<(img|a).*?{$keyword}.*?\/>(*SKIP)(*F)|{$keyword}/{$i}u", $final_url, $post_content);
 			
 			$changed =  showDOMNode($doc,$keyword,$final_url);
 
