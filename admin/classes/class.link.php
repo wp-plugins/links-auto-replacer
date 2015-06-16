@@ -11,7 +11,7 @@ class Lar_Link{
 	* @return	 string the final url.
 	* @since    2.0.0
 	**/
-	public function get_final_url( $link_id ){
+	public static function get_final_url( $link_id ){
 		$link_meta = get_post_meta( $link_id );
 		if($link_meta[PLUGIN_PREFIX.'link_type'][0] == 'external' OR $link_meta[PLUGIN_PREFIX.'link_type'][0] == ''){
 				if ( get_option('permalink_structure') != '' ) {

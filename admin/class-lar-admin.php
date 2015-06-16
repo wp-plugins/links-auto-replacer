@@ -372,8 +372,9 @@ class Links_Auto_Replacer_Admin {
 	 * @since    2.0.0
 	 */
 	public function insert_validation_nonce(){
-
-	 	$link_slug = get_post_meta($_GET['post'], PLUGIN_PREFIX.'slug',true);
+		if(isset($_GET['post'])){
+	 		$link_slug = get_post_meta($_GET['post'], PLUGIN_PREFIX.'slug',true);
+		}
 		
 	 	?>
 		 	<script type="text/javascript">
